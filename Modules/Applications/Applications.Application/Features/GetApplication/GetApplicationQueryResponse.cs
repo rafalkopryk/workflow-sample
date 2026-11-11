@@ -1,13 +1,6 @@
 ﻿using Applications.Application.Features.GetApplication.Dto;
+using Common.Application.Cqrs.Results;
 
 namespace Applications.Application.Features.GetApplication;
 
-public abstract record GetApplicationQueryResponse 
-{
-    public record OK(GetApplicationQueryCreditApplicationDto CreditApplication) : GetApplicationQueryResponse;
-
-    public record ResourceNotFound() : GetApplicationQueryResponse
-    {
-        public static readonly ResourceNotFound Result = new();
-    }
-}
+public union GetApplicationQueryResponse(GetApplicationQueryCreditApplicationDto, ResourceNotFound);

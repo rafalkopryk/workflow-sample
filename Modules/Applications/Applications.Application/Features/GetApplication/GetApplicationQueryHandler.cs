@@ -2,7 +2,7 @@
 using Applications.Application.Features.GetApplication.Dto;
 using Applications.Application.Infrastructure.Database;
 using Common.Application.Cqrs;
-using static Applications.Application.Features.GetApplication.GetApplicationQueryResponse;
+using Common.Application.Cqrs.Results;
 
 namespace Applications.Application.Features.GetApplication;
 
@@ -17,9 +17,7 @@ internal class GetApplicationQueryHandler(CreditApplicationDbContext creditAppli
             return ResourceNotFound.Result;
         }
 
-        var result = Map(creditApplication);
-        
-        return new OK(result);
+        return Map(creditApplication);
     }
 
     private static GetApplicationQueryCreditApplicationDto Map(CreditApplication creditApplication)

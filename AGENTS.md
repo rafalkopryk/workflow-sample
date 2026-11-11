@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-`Credit.slnx` is the .NET 10 solution. Business code is grouped under `Modules/`: `Applications` owns credit applications, `Calculations` performs simulations, and `Processes` contains interchangeable Camunda, Conductor, Elsa, Saga, and Temporal workflow hosts. Keep their shared message contracts compatible. `Modules/Aspire/Aspire/Aspire.AppHost` orchestrates services and containers; `Aspire.ServiceDefaults` supplies common telemetry and resilience. Frontends live in `Modules/Front/` (Blazor and Next.js). Shared CQRS and configuration helpers are in `Common/`, and architecture images are in `img/`. Treat `external/camunda-startup/` as a vendored Git subtree.
+`Credit.slnx` is the .NET 11 solution. Business code is grouped under `Modules/`: `Applications` owns credit applications, `Calculations` performs simulations, and `Processes` contains interchangeable Camunda, Conductor, Elsa, Saga, and Temporal workflow hosts. Keep their shared message contracts compatible. `Modules/Aspire/Aspire/Aspire.AppHost` orchestrates services and containers; `Aspire.ServiceDefaults` supplies common telemetry and resilience. Frontends live in `Modules/Front/` (Blazor and Next.js). Shared CQRS and configuration helpers are in `Common/`, and architecture images are in `img/`. Treat `external/camunda-startup/` as a vendored Git subtree.
 
 ## Build, Test, and Development Commands
 

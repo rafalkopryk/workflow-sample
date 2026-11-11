@@ -1,16 +1,7 @@
-﻿namespace Applications.Application.Features.SignContract;
+﻿using Common.Application.Cqrs.Results;
+
+namespace Applications.Application.Features.SignContract;
 
 public record SignContractCommand(string ApplicationId);
 
-public record SignContractCommandResponse
-{
-    public record OK() : SignContractCommandResponse
-    {
-        public static readonly OK Result = new();
-    }
-
-    public record ResourceNotFound() : SignContractCommandResponse
-    {
-        public static readonly ResourceNotFound Result = new();
-    }
-}
+public union SignContractCommandResponse(OK, ResourceNotFound);

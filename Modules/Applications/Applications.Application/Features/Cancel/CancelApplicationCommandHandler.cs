@@ -2,9 +2,9 @@
 using Applications.Application.Infrastructure.Database;
 using Applications.Contracts.Events;
 using Common.Application.Cqrs;
+using Common.Application.Cqrs.Results;
 using Common.Application.Dictionary;
 using Wolverine;
-using static Applications.Application.Features.CancelApplication.CancelApplicationCommandResponse;
 
 namespace Applications.Application.Features.CancelApplication;
 

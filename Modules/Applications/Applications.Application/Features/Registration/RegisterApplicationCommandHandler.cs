@@ -2,8 +2,8 @@
 using Applications.Application.Infrastructure.Database;
 using Applications.Contracts.Events;
 using Common.Application.Cqrs;
+using Common.Application.Cqrs.Results;
 using Wolverine;
-using static Applications.Application.Features.RegisterApplication.RegisterApplicationCommandResponse;
 
 namespace Applications.Application.Features.RegisterApplication;
 

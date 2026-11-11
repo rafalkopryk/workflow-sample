@@ -1,9 +1,11 @@
 using Applications.Application.Extensions;
 using Applications.Application.Features.CancelApplication;
 using Applications.Application.Features.GetApplication;
+using Applications.Application.Features.GetApplication.Dto;
 using Applications.Application.Features.RegisterApplication;
 using Applications.Application.Features.SignContract;
 using Common.Application.Cqrs;
+using Common.Application.Cqrs.Results;
 using Common.Application.Extensions;
 using Wolverine;
 
@@ -42,9 +44,9 @@ applicationsEndpoints.MapPost("/", async Task<IResult> (RegisterApplicationComma
     var result = await mediator.Send<RegisterApplicationCommand, RegisterApplicationCommandResponse>(command);
     return result switch
     {
-        RegisterApplicationCommandResponse.OK => TypedResults.Created(),
-        RegisterApplicationCommandResponse.ResourceExists resourceExists => TypedResults.Problem(statusCode: StatusCodes.Status422UnprocessableEntity, title: nameof(resourceExists)),
-        _ => throw new ArgumentOutOfRangeException(nameof(result), result, null)
+        OK => TypedResults.Created(),
+        ResourceExists resourceExists => TypedResults.Problem(statusCode: StatusCodes.Status422UnprocessableEntity, title: nameof(resourceExists)),
+        null => throw new ArgumentOutOfRangeException(nameof(result), result, null)
     };
 })
 .WithName("RegisterApplication");
@@ -54,9 +56,9 @@ applicationsEndpoints.MapGet("/{applicationId}", async Task<IResult> (string app
     var result = await mediator.Send<GetApplicationQuery, GetApplicationQueryResponse>(new GetApplicationQuery(applicationId));
     return result switch
     {
-        GetApplicationQueryResponse.OK ok => TypedResults.Ok(ok),
-        GetApplicationQueryResponse.ResourceNotFound resourceNotFound => TypedResults.NotFound(),
-        _ => throw new ArgumentOutOfRangeException(nameof(result), result, null)
+        GetApplicationQueryCreditApplicationDto creditApplication => TypedResults.Ok(new { CreditApplication = creditApplication }),
+        ResourceNotFound => TypedResults.NotFound(),
+        null => throw new ArgumentOutOfRangeException(nameof(result), result, null)
     };
 })
 .WithName("GetApplication");
@@ -66,9 +68,9 @@ applicationsEndpoints.MapPost("/{applicationId}/signature", async Task<IResult> 
     var result = await mediator.Send<SignContractCommand, SignContractCommandResponse>(new SignContractCommand(applicationId));
     return result switch
     {
-        SignContractCommandResponse.OK => TypedResults.Ok(),
-        SignContractCommandResponse.ResourceNotFound resourceNotFound => TypedResults.NotFound(),
-        _ => throw new ArgumentOutOfRangeException(nameof(result), result, null)
+        OK => TypedResults.Ok(),
+        ResourceNotFound resourceNotFound => TypedResults.NotFound(),
+        null => throw new ArgumentOutOfRangeException(nameof(result), result, null)
     };
 })
 .WithName("SignContract");
@@ -78,9 +80,9 @@ applicationsEndpoints.MapPost("/{applicationId}/cancellation", async Task<IResul
     var result = await mediator.Send<CancelApplicationCommand, CancelApplicationCommandResponse>(new CancelApplicationCommand(applicationId));
     return result switch
     {
-        CancelApplicationCommandResponse.OK => TypedResults.Ok(),
-        CancelApplicationCommandResponse.ResourceNotFound resourceNotFound => TypedResults.NotFound(),
-        _ => throw new ArgumentOutOfRangeException(nameof(result), result, null)
+        OK => TypedResults.Ok(),
+        ResourceNotFound resourceNotFound => TypedResults.NotFound(),
+        null => throw new ArgumentOutOfRangeException(nameof(result), result, null)
     };
 })
 .WithName("CancelApplication");

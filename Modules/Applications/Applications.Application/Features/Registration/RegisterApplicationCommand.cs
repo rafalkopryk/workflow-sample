@@ -1,4 +1,5 @@
 ﻿using Applications.Application.Features.RegisterApplication.Dto;
+using Common.Application.Cqrs.Results;
 
 namespace Applications.Application.Features.RegisterApplication;
 
@@ -9,15 +10,4 @@ public record RegisterApplicationCommand
     public string ProcessCode { get; init; }
 }
 
-public abstract record RegisterApplicationCommandResponse
-{
-    public record OK() : RegisterApplicationCommandResponse
-    {
-        public static readonly OK Result = new (); 
-    }
-
-    public record ResourceExists() : RegisterApplicationCommandResponse
-    {
-        public static readonly ResourceExists Result = new();
-    }
-}
+public union RegisterApplicationCommandResponse(OK, ResourceExists);
